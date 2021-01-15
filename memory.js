@@ -33,10 +33,12 @@ no11.addEventListener("click", function() { RevealCard(11) });
 let firstVisible = false;
 let turnCounter = 0;
 let visibleNr;
+let block = false;
 
 function RevealCard(nr) {
     let opacityValue = $('no' + nr).css('opacity');
-    if (opacityValue !== 0) {
+    if (opacityValue !== 0 && block === false) {
+        block = true;
         let picture = "url(img/" + cards[nr] + ")";
         $('#no' + nr).css('background-image', picture);
         $('#no' + nr).addClass('cardA');
@@ -44,6 +46,7 @@ function RevealCard(nr) {
         if (firstVisible == false) {
             firstVisible = true;
             visibleNr = nr;
+            block = false;
         } else {
             if (cards[visibleNr] === cards[nr]) {
                 setTimeout(function() {
@@ -51,7 +54,7 @@ function RevealCard(nr) {
                 }, 550);
             } else {
                 setTimeout(function() {
-                    hide2Cards(nr, visibleNr)
+                    restore2Cards(nr, visibleNr)
                 }, 550);
             }
 
@@ -66,8 +69,19 @@ function RevealCard(nr) {
 function hide2Cards(card1, card2) {
     $('#no' + card1).css('opacity', '0');
     $('#no' + card2).css('opacity', '0');
+
+    block = false;
 }
 
 function restore2Cards(card1, card2) {
+    $('#no' + card1).css('background-image', 'url(img/karta.png');
+    $('#no' + card1).removeClass('cardA');
+    $('#no' + card1).addClass('card');
 
-}
+    $('#no' + card2).css('background-image', 'url(img/karta.png');
+    $('#no' + card2).removeClass('cardA');
+    $('#no' + card2).addClass('card');
+
+    block = false;
+
+};
